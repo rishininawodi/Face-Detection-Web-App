@@ -12,16 +12,28 @@ def draw_boundary(img,classifire,scaleFactor,minNeighbors,color,text):
         cv2.putText(img,text,(x, y-4), cv2.FONT_HERSHEY_COMPLEX, 0.8,color,1,cv2.LINE_AA) #text type cordinates
         coords = [x , y, w,h]  #update the cordinatees
 
-    return coords,img    #return the cordinates and updated it to image   
+    return coords   #return the cordinates and updated it to image   
 
-def detect(img,caceCascade): #pass face and image
-    color = { "blue":(255,0,0), "red":(0,0,255), "green":(0,255,0) }
+def detect(img,faceCascade,eyeCascade,noseCascade,mouthCascade): #pass face and image
+    color = { "blue":(16, 165, 173 ), "red":(0,0,255), "green":(0,255,0) , "pink":(244, 37, 162 ) }
 
-    coords,img = draw_boundary(img, faceCascade , 1.1 , 10 , color['blue'] ,"face") #call function
+    coords = draw_boundary(img, faceCascade , 1.1 , 10 , color['blue'] ,"face") #call function
+
+    #Check  if the length of this equal to 4.since we returm four cordinates above..
+    if len(coords) ==4:
+        roi_img = img[coords[1] : coords[1]+coords[3] , coords[0]:coords[0]+coords[2]]
+        coords = draw_boundary(roi_img, eyeCascade , 1.1 , 14 , color['pink'] ,"eye")
+        coords = draw_boundary(roi_img, noseCascade , 1.1 , 5 , color['green'] ,"nose")
+        coords = draw_boundary(roi_img, mouthCascade , 1.1 , 20 , color['red'] ,"mouth") 
+
+
     return img
 
+#detecting Face
 faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-
+eyeCascade = cv2.CascadeClassifier('haarcascade_eye.xml')
+noseCascade = cv2.CascadeClassifier('Nariz.xml')
+mouthCascade = cv2.CascadeClassifier('Mouth.xml')
 
 
 #Read vedio stream from webcam 
@@ -31,7 +43,7 @@ video_capture = cv2.VideoCapture(0)  #Put zero if using default laptop or deskto
 #create infinite loop
 while True:
     _, img = video_capture.read()  #read vedio as an image.normal returns two parameters.we only use image so used " _, "
-    img = detect(img, faceCascade)
+    img = detect(img, faceCascade,eyeCascade,noseCascade,mouthCascade)
      #check web cam is working
     cv2.imshow("face detection" , img)  #face detection mean name for the window
     if cv2.waitKey(1) & 0xFF == ord('e'):#break the loop if user press q.So terminating condition for loop
