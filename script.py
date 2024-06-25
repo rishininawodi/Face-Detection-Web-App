@@ -1,5 +1,8 @@
 import cv2
 
+def generate_dataset(img,id,img_id):
+    cv2.imwrite("data/user." + str(id) + "."+str(img_id)+".jpg",img)
+
 #define a method to draw the boundary around the features
 def draw_boundary(img,classifire,scaleFactor,minNeighbors,color,text):
     gray_img = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY) #Our RGB image  convert to gray_scale image
@@ -14,17 +17,22 @@ def draw_boundary(img,classifire,scaleFactor,minNeighbors,color,text):
 
     return coords   #return the cordinates and updated it to image   
 
-def detect(img,faceCascade,eyeCascade,noseCascade,mouthCascade): #pass face and image
+def detect(img,faceCascade,eyeCascade,noseCascade,mouthCascade,img_id): #pass face and image
     color = { "blue":(16, 165, 173 ), "red":(0,0,255), "green":(0,255,0) , "pink":(244, 37, 162 ) }
 
     coords = draw_boundary(img, faceCascade , 1.1 , 10 , color['blue'] ,"face") #call function
 
     #Check  if the length of this equal to 4.since we returm four cordinates above..
     if len(coords) ==4:
+
         roi_img = img[coords[1] : coords[1]+coords[3] , coords[0]:coords[0]+coords[2]]
-        coords = draw_boundary(roi_img, eyeCascade , 1.1 , 14 , color['pink'] ,"eye")
-        coords = draw_boundary(roi_img, noseCascade , 1.1 , 5 , color['green'] ,"nose")
-        coords = draw_boundary(roi_img, mouthCascade , 1.1 , 20 , color['red'] ,"mouth") 
+        user_id =1
+        generate_dataset(roi_img,user_id,img_id)
+
+        
+        #coords = draw_boundary(roi_img, eyeCascade , 1.1 , 14 , color['pink'] ,"eye")
+        #coords = draw_boundary(roi_img, noseCascade , 1.1 , 5 , color['green'] ,"nose")
+        #coords = draw_boundary(roi_img, mouthCascade , 1.1 , 20 , color['red'] ,"mouth") 
 
 
     return img
@@ -40,12 +48,15 @@ mouthCascade = cv2.CascadeClassifier('Mouth.xml')
 #So create object
 video_capture = cv2.VideoCapture(0)  #Put zero if using default laptop or desktop web cam..Other wise use  exteranal cam put -1 or 1
 
+img_id =0
+
 #create infinite loop
 while True:
     _, img = video_capture.read()  #read vedio as an image.normal returns two parameters.we only use image so used " _, "
-    img = detect(img, faceCascade,eyeCascade,noseCascade,mouthCascade)
+    img = detect(img, faceCascade,eyeCascade,noseCascade,mouthCascade,img_id)
      #check web cam is working
     cv2.imshow("face detection" , img)  #face detection mean name for the window
+    img_id +=1
     if cv2.waitKey(1) & 0xFF == ord('e'):#break the loop if user press q.So terminating condition for loop
         break
 
