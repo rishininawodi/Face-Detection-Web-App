@@ -2,10 +2,14 @@ import numpy as np
 from PIL import Image
 import os,cv2
 
-def train_classfier(data_dir):
+#method for train custom classifier to recognize face
+def train_classifer(data_dir):
+    #read all images in custom data set
     path = [os.path.join(data_dir,f)for f in os.listdir(data_dir)]
-    faces = {}
-    ids = {}
+    faces =[]
+    ids = []
+
+    #store images in a numpy format and ids of the user on the same index in imageNP and id lists
     for image in path:
         img = Image.open(image).convert('L')
         imageNp = np.array(img, 'uint8')
@@ -26,4 +30,4 @@ def train_classfier(data_dir):
         #to save it
         clf.write("classifire.yml")
 
-train_classfier("data")
+train_classifer("data")
