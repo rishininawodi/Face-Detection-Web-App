@@ -23,6 +23,10 @@ This project is a real-time face detection application built using Python and th
 </ol>
 
 <h3>Special Notes / References.........</h3>
+
+<p>If you are use your computer or laptop web cam use <b>"0</b> ,If not <b>"-1" or "1"</b></p>
+<p>To remove cam recognizer press <b>"e" </b></p>
+  
 <p>This Shows Haar Features,Which are used to detect face..There Are:</p>
 <ul>
   <li>Edge Features</li>
