@@ -1,5 +1,6 @@
 import cv2
 
+#this part for generating dataset to train classifire...
 def generate_dataset(img,id,img_id):
     cv2.imwrite("data/user." + str(id) + "."+str(img_id)+".jpg",img)
 
