@@ -3,7 +3,11 @@
 This project is a real-time face detection application built using Python and the OpenCV library. The app utilizes computer vision techniques to detect and highlight faces in a live video stream from your webcam.
 
 <h3>Features</h3>
-<ul><li><b>Real Time Detection: </b> Detect faces in real time from your web cam feed</li></ul>
+<ul><li><b>Real Time Detection: </b> Detect faces in real time from your web cam feed.</li>
+<li><b>High Accuracy: </b> Utilizes OpenCV's pre-trained Haar Cascade classifiers for reliable face detection.</li>
+<li><b>Easy to use: </b> Simple setup and execution with minimal dependencies.</li>
+
+</ul>
 
 <h3>Languages----></h3>
 <ul>
