@@ -16,6 +16,11 @@ This project is a real-time face detection application built using Python and th
 </ul>
 
 <h3>Usage..</h3>
+<ol>
+  <li>Ensure your webcam is connected and recognized by your system.</li>
+  <li><b>Run the application :</b> python file_name.py</li>
+  <li>A window will open displaying the video feed from your webcam with detected faces highlighted.</li>
+</ol>
 
 <h3>Special Notes / References.........</h3>
 <p>This Shows Haar Features,Which are used to detect face..There Are:</p>
