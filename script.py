@@ -17,15 +17,15 @@ def draw_boundary(img,classifire,scaleFactor,minNeighbors,color,text,clf):
 
         if id ==1:    
 
-            cv2.putText(img,"Rishi",(x, y-4), cv2.FONT_HERSHEY_COMPLEX, 0.8,color,1,cv2.LINE_AA) #text type cordinates
-        coords = [x , y, w,h]  #update the cordinatees
+         cv2.putText(img,"Rishi",(x, y-4), cv2.FONT_HERSHEY_COMPLEX, 0.8,color,1,cv2.LINE_AA) #text type cordinates
+         coords = [x , y, w,h]  #update the cordinatees
 
     return coords   #return the cordinates and updated it to image   
 
 def recognize(img,clf,faceCascade):
     color = { "blue":(16, 165, 173 ), "red":(0,0,255), "green":(0,255,0) , "pink":(244, 37, 162 ) }
 
-    coords = draw_boundary(img,faceCascade,1.1,10,color["blue"], "Face" , clf)
+    coords = draw_boundary(img,faceCascade,1.1,10,color["blue"], "face" , clf)
 
 def detect(img,faceCascade,eyeCascade,noseCascade,mouthCascade,img_id): #pass face and image
     color = { "blue":(16, 165, 173 ), "red":(0,0,255), "green":(0,255,0) , "pink":(244, 37, 162 ) }
@@ -33,8 +33,8 @@ def detect(img,faceCascade,eyeCascade,noseCascade,mouthCascade,img_id): #pass fa
     coords = draw_boundary(img, faceCascade , 1.1 , 10 , color['blue'] ,"face") #call function
 
     return img
-    #Check  if the length of this equal to 4.since we returm four cordinates above..
-    if len(coords) ==4:
+                   #Check  if the length of this equal to 4.since we returm four cordinates above..
+    if len(coords) == 4:
 
         roi_img = img[coords[1] : coords[1]+coords[3] , coords[0]:coords[0]+coords[2]]
         user_id =1
@@ -46,7 +46,7 @@ def detect(img,faceCascade,eyeCascade,noseCascade,mouthCascade,img_id): #pass fa
         #coords = draw_boundary(roi_img, mouthCascade , 1.1 , 20 , color['red'] ,"mouth") 
 
 
-    return img
+        return img
 
 #detecting Face
 faceCascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
@@ -61,7 +61,7 @@ clf.read("classifire.yml")
 
 #Read vedio stream from webcam 
 #So create object
-video_capture = cv2.VideoCapture()  #Put zero if using default laptop or desktop web cam..Other wise use  exteranal cam put -1 or 1
+video_capture = cv2.VideoCapture(0)  #Put zero if using default laptop or desktop web cam..Other wise use  exteranal cam put -1 or 1
 
 img_id =0
 
@@ -73,7 +73,7 @@ while True:
     if not _ :
         print("faild to capture image")
         break 
-    img = recognize(img,clf,faceCascade)
+    img = recognize(img , clf , faceCascade)
 
     if img is None or img.size == 0:
         print("Empty or invalid image")
@@ -81,7 +81,7 @@ while True:
 
     cv2.imshow("face detection" , img)  #face detection mean name for the window
     img_id +=1
-    if cv2.waitKey(0) & 0xFF == ord('e'):#break the loop if user press q.So terminating condition for loop
+    if cv2.waitKey(1) & 0xFF == ord('e'):#break the loop if user press q.So terminating condition for loop
         break
 
 video_capture.release()  #release web cam 
