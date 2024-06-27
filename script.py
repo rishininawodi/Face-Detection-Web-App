@@ -17,7 +17,7 @@ def draw_boundary(img,classifire,scaleFactor,minNeighbors,color,text,clf):
 
         if id ==1:    
 
-            cv2.putText(img,"Ali",(x, y-4), cv2.FONT_HERSHEY_COMPLEX, 0.8,color,1,cv2.LINE_AA) #text type cordinates
+            cv2.putText(img,"Rishi",(x, y-4), cv2.FONT_HERSHEY_COMPLEX, 0.8,color,1,cv2.LINE_AA) #text type cordinates
         coords = [x , y, w,h]  #update the cordinatees
 
     return coords   #return the cordinates and updated it to image   
@@ -58,9 +58,10 @@ clf = cv2.face.LBPHFaceRecognizer_create()
 clf.read("classifire.yml")
 
 
+
 #Read vedio stream from webcam 
 #So create object
-video_capture = cv2.VideoCapture(0)  #Put zero if using default laptop or desktop web cam..Other wise use  exteranal cam put -1 or 1
+video_capture = cv2.VideoCapture()  #Put zero if using default laptop or desktop web cam..Other wise use  exteranal cam put -1 or 1
 
 img_id =0
 
@@ -69,10 +70,18 @@ while True:
     _, img = video_capture.read()  #read vedio as an image.normal returns two parameters.we only use image so used " _, "
     #img = detect(img, faceCascade,eyeCascade,noseCascade,mouthCascade,img_id)
      #check web cam is working
+    if not _ :
+        print("faild to capture image")
+        break 
     img = recognize(img,clf,faceCascade)
+
+    if img is None or img.size == 0:
+        print("Empty or invalid image")
+        continue
+
     cv2.imshow("face detection" , img)  #face detection mean name for the window
     img_id +=1
-    if cv2.waitKey(1) & 0xFF == ord('e'):#break the loop if user press q.So terminating condition for loop
+    if cv2.waitKey(0) & 0xFF == ord('e'):#break the loop if user press q.So terminating condition for loop
         break
 
 video_capture.release()  #release web cam 
