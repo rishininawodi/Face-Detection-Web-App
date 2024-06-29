@@ -4,7 +4,7 @@ import os,cv2
 import numpy as np
 
 #method for train custom classifier to recognize face
-def train_classifer(data_dir):
+def train_classifier(data_dir):
     #read all images in custom data set
     paths = [os.path.join(data_dir,f)for f in os.listdir(data_dir)]
     faces =[]
@@ -32,4 +32,4 @@ def train_classifer(data_dir):
         #to save it
         clf.save("classifire.yml")
 
-train_classifer("data")
+train_classifier("data")

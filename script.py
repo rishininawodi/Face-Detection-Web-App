@@ -5,20 +5,23 @@ def generate_dataset(img,id,img_id):
     cv2.imwrite("data/user." + str(id) + "."+str(img_id)+".jpg",img)
 
 #define a method to draw the boundary around the features
-def draw_boundary(img,classifire,scaleFactor,minNeighbors,color,text,clf):
+def draw_boundary(img,classifier,scaleFactor,minNeighbors,color,text,clf=None):
     gray_img = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY) #Our RGB image  convert to gray_scale image
-    features = classifire.detectMultiScale(gray_img,scaleFactor,minNeighbors)   #finding/detecting  features in classifires
+    features = classifier.detectMultiScale(gray_img,scaleFactor,minNeighbors)   #finding/detecting  features in classifires
 
     #declare the list which will hold the cordinates for face.
     coords = []
     for( x,y,w,h) in features:
         cv2.rectangle(img ,(x,y) ,(x+w , y+h) , color , 2)
-        id, _ = clf.predict(gray_img[y:y+h , x:x+w])
 
-        if id ==1:    
+        if clf:
+            
+            id, _ = clf.predict(gray_img[y:y+h , x:x+w])
 
-         cv2.putText(img,"Rishi",(x, y-4), cv2.FONT_HERSHEY_COMPLEX, 0.8,color,1,cv2.LINE_AA) #text type cordinates
-         coords = [x , y, w,h]  #update the cordinatees
+            if id ==1:    
+
+                 cv2.putText(img,"Rishi",(x, y-4), cv2.FONT_HERSHEY_COMPLEX, 0.8,color,1,cv2.LINE_AA) #text type cordinates
+        coords = [x , y, w,h]  #update the cordinatees
 
     return coords   #return the cordinates and updated it to image   
 
@@ -26,13 +29,13 @@ def recognize(img,clf,faceCascade):
     color = { "blue":(16, 165, 173 ), "red":(0,0,255), "green":(0,255,0) , "pink":(244, 37, 162 ) }
 
     coords = draw_boundary(img,faceCascade,1.1,10,color["blue"], "face" , clf)
-
+    return img
 def detect(img,faceCascade,eyeCascade,noseCascade,mouthCascade,img_id): #pass face and image
     color = { "blue":(16, 165, 173 ), "red":(0,0,255), "green":(0,255,0) , "pink":(244, 37, 162 ) }
 
     coords = draw_boundary(img, faceCascade , 1.1 , 10 , color['blue'] ,"face") #call function
 
-    return img
+
                    #Check  if the length of this equal to 4.since we returm four cordinates above..
     if len(coords) == 4:
 
@@ -67,17 +70,19 @@ img_id =0
 
 #create infinite loop
 while True:
-    _, img = video_capture.read()  #read vedio as an image.normal returns two parameters.we only use image so used " _, "
+    _,img = video_capture.read()  #read vedio as an image.normal returns two parameters.we only use image so used " _, "
     #img = detect(img, faceCascade,eyeCascade,noseCascade,mouthCascade,img_id)
      #check web cam is working
     if not _ :
         print("faild to capture image")
         break 
-    img = recognize(img , clf , faceCascade)
+    
 
     if img is None or img.size == 0:
         print("Empty or invalid image")
         continue
+
+    img = recognize(img , clf , faceCascade)
 
     cv2.imshow("face detection" , img)  #face detection mean name for the window
     img_id +=1
