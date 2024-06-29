@@ -40,3 +40,6 @@ This project is a real-time face detection application built using Python and th
 <h3>Contributing..</h3>
 <p><b>Contributions are welcome! Please fork the repository and submit a pull request with your changes.</b></p>
 
+<h2>References</h2>
+<p><b>Haar Cascadig Classifier :</b> https://github.com/opencv/opencv/tree/master/data/haarcascades </p>
+
