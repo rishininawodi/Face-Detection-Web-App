@@ -20,6 +20,7 @@ This project is a real-time face detection application built using Python and th
   <li>Ensure your webcam is connected and recognized by your system.</li>
   <li><b>Run the application :</b> python file_name.py</li>
   <li>A window will open displaying the video feed from your webcam with detected faces highlighted.</li>
+  <li>To Exist from Web cam press <b> e </b></li>
 </ol>
 
 <h3>Special Notes / References.........</h3>
