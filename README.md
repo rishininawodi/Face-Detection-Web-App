@@ -1,4 +1,4 @@
-<h1>********Welcome To Face Detection App********</h1>
+<h1>********Welcome To Face Detection App*********</h1>
 
 This project is a real-time face detection application built using Python and the OpenCV library. The app utilizes computer vision techniques to detect and highlight faces in a live video stream from your webcam.
 
