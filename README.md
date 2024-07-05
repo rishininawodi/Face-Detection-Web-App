@@ -9,7 +9,7 @@ This project is a real-time face detection application built using Python and th
 
 </ul>
 
-<h3>Languages----></h3>
+<h3>Languages-----></h3>
 <ul>
   <li>OpenCV</li>
   <li>Python</li>
